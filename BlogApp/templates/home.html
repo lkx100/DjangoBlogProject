@@ -1,29 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %} Blogs Page {% endblock %}
+{% block title %} Blogs List {% endblock %}
 
 {% block content %}
+<br>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form method="POST" class="p-4 border rounded">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="blog_title" class="form-label">Blog Title</label>
-                    <input type="text" name="blog_title" class="form-control" placeholder="Enter Title" required>
-                </div>
-                <div class="mb-3">
-                    <label for="blog_content" class="form-label">Blog Content</label>
-                    <textarea name="blog_content" class="form-control" placeholder="Enter Content" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-success w-100">Create</button>
-            </form>
-            <br> <hr> <br>
-            {% if blog_title %}
-                <h4 style="text-align: center"> {{ blog_title }} </h4> <br> <br>
-                <p style="text-align: center"> {{ blog_content }}</p>
+            <h4 style="text-align: center">All Blogs List</h4> <br> <br>
+            {% if blogs %}
+                {% for blog in blogs %}
+                    <div class="mb-3">
+                        <div class="p-3 border rounded">
+                            <h5>{{ forloop.counter }}. <a href="{% url "view_blog" blog_id=blog.id %}"> {{ blog.title }}</h5> </a>
+                            <p>{{ blog.content|slice:":20"}}...</p>
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
             <div class="alert alert-info">
-                <h4 style="text-align: center">No Blog Created Yet</h4>
+                <h4 style="text-align: center">No Blogs Created Yet</h4>
             </div>
             {% endif %}
         </div>
