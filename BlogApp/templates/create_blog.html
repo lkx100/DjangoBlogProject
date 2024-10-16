@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
-{% block title %} Blogs Page {% endblock %}
-
+{% block title %} Create Blog {% endblock %}
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -15,13 +13,22 @@
                     <label for="blog_content" class="form-label">Blog Content</label>
                     <textarea name="blog_content" class="form-control" placeholder="Enter Content" required></textarea>
                 </div>
+                <div class="mb-3">
+                    <label for="blog_tags" class="form-label">Blog Tags</label>
+                    <div>
+                        {% for tag in tags %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="blog_tags" value="{{ tag.id }}" id="tag{{ tag.id }}">
+                                <label class="form-check-label" for="tag{{ tag.id }}">
+                                    {{ tag.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-success w-100">Create</button>
             </form>
             <br> <hr> <br>
-            {% comment %} {% if blog_title %}
-                <h4 style="text-align: center"> {{ blog_title }} </h4> <br> <br>
-                <p style="text-align: center"> {{ blog_content }}</p>
-            {% endif %} {% endcomment %}
             {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}

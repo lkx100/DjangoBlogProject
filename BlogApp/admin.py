@@ -1,4 +1,8 @@
 from django.contrib import admin
-from .models import Blog
+from .models import Blog, Tag
 
-admin.site.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    filter_horizontal = ('tags',)
+
+admin.site.register(Blog, BlogAdmin)
+admin.site.register(Tag)
