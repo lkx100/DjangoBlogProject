@@ -2,15 +2,15 @@ from django.shortcuts import render
 
 def list_blogs(request):
 
-    title, content = "", ""
+    blog_title, blog_content = "", ""
 
     if request.method == "POST":
-        title = request.POST.get("title")
-        content = request.POST.get("content")
+        blog_title = request.POST.get("blog_title")
+        blog_content = request.POST.get("blog_content")
     
     context = {
-        "title": title,
-        "content": content,
+        "blog_title": blog_title,
+        "blog_content": blog_content,
     }
 
     return render(request, "home.html", context)
