@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog, Tag
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 def create_blog(request):
 
@@ -68,3 +71,33 @@ def view_blog(request, blog_id):
 def home(request):
     blogs = Blog.objects.all()
     return render(request, "home.html", {"blogs": blogs})
+
+def signup_page(request):
+    if request.method == 'POST':
+        # Get the form data
+        first_name = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        # filter the user from User model
+        user = User.objects.filter(username=username)
+
+        if user.exists():
+            messages.info(request, f"{username} already taken!")
+            return redirect('login_page')
+        else:
+            user = User.objects.create(
+                first_name = first_name,
+                last_name = lastName,
+                username = username,
+                email = email,
+                # password can't be set directly, as it would not encrypt it & remain as raw str!
+            )
+            # Django's set_password method encrypts the password
+            user.set_password(password)
+            user.save()  # Save the user to the database
+            messages.info(request, f"Account created successfully")
+
+    return render(request, 'signup.html')
+
