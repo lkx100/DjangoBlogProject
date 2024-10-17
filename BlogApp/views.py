@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog, Tag
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 def create_blog(request):
 
@@ -101,3 +101,26 @@ def signup_page(request):
 
     return render(request, 'signup.html')
 
+# Login Logic
+def login_page(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if User.objects.all().filter(username=username).exists():
+            validUser = authenticate(username=username, password=password)
+            if validUser:
+                login(request, validUser)   # Add user to a session
+                return redirect("home")
+            else:
+                messages.info(request, f"Invalid Password, Try Again")
+        else:
+            messages.info(request, f"username \"{username}\" Not found")
+
+    return render(request, 'login.html')
+
+def logout_page(request):
+
+    logout(request)
+    return redirect('home')

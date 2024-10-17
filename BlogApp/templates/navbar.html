@@ -31,7 +31,16 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form> {% endcomment %}
-        <a href="{% url "create_blog" %}">
+          {% if request.user.is_authenticated %}
+              <a href="{% url "logout_page" %}">
+              <button class="btn btn-danger"> Logout </button>
+              </a>
+          {% else %}
+              <a href="{% url "login_page" %}">
+              <button class="btn btn-success"> Login </button>
+              </a>
+          {% endif %}
+        <a href="{% url "create_blog" %}" style="margin-left: 10px;">
           <button class="btn btn-primary" id="create-blog" data-bs-toggle="modal" data-bs-target="#createBlogModal">Create Blog</button>
         </a>
       </div>
