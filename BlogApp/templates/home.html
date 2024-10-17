@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% block title %} Blogs List {% endblock %}
-
 {% block content %}
 <br>
     <div class="row justify-content-center">
@@ -11,7 +9,10 @@
                 {% for blog in blogs %}
                     <div class="mb-3">
                         <div class="p-3 border rounded">
-                            <h5>{{ forloop.counter }}. <a href="{% url "view_blog" blog_id=blog.id %}"> {{ blog.title }}</a></h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>{{ forloop.counter }}. <a href="{% url "view_blog" blog_id=blog.id %}"> {{ blog.title }}</a></h5>
+                                <a href="{% url 'update_blog' blog_id=blog.id %}" class="btn btn-warning btn-sm">Update</a>
+                            </div>
                             <div class="mt-2">
                                 <ul class="list-inline">
                                     {% for tag in blog.tags.all %}
