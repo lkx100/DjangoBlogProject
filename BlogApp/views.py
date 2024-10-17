@@ -56,6 +56,11 @@ def update_blog(request, blog_id):
 
     return render(request, "update_blog.html", context)
 
+def delete_blog(request, blog_id):
+    blog = get_object_or_404(Blog, id=blog_id)
+    blog.delete()
+    return redirect("home")
+
 def view_blog(request, blog_id):
     blog = Blog.objects.get(id=blog_id)
     return render(request, "view_blog.html", {"blog": blog})
