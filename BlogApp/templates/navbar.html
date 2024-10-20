@@ -36,8 +36,11 @@
               <button class="btn btn-danger"> Logout </button>
               </a>
           {% else %}
-              <a href="{% url "login_page" %}">
+              <a href="{% url "login_page" %}" style="margin-right: 10px;">
               <button class="btn btn-success"> Login </button>
+              </a>
+              <a href="{% url "signup_page" %}">
+              <button class="btn btn-success"> SignUp </button>
               </a>
           {% endif %}
         <a href="{% url "create_blog" %}" style="margin-left: 10px;">
